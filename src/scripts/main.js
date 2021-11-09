@@ -12,5 +12,5 @@ export const renderApp = () => {
         applicationElement.innerHTML = LoginForm()
     }
 }
-
+//calling function
 renderApp()
