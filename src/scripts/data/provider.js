@@ -26,8 +26,7 @@ export const getUsers = () => {
 
 //this is the POST method tells API to create a post state object to be saved in permanent state & returning the application state for posts
 
-export const sendPost = (userReservation) => {
-
+export const savePost = (userReservation) => {
 
     const fetchOptions = {
         method: "POST", 
@@ -37,7 +36,7 @@ export const sendPost = (userReservation) => {
         body: JSON.stringify(userReservation),
     }
 
-    return fetch (`${API}/posts`, fetchOptions)
+    return fetch (`${apiURL}/posts`, fetchOptions)
     .then(response => response.json())
     .then(() => {
         mainContainer.dispatchEvent(new CustomEvent("stateChanged"))

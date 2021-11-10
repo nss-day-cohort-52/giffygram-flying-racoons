@@ -1,4 +1,5 @@
-import { sendPost } from "../data/provider.js"
+import { savePost } from "../data/provider.js"
+const applicationElement = document.querySelector(".giffygram")
 
 
 //this function builds the HTML tha contains the input fields for the post form
@@ -47,7 +48,7 @@ mainContainer.addEventListener("click", clickEvent => {
         }
 
         // Send the data to the API for permanent storage
-        sendPost(dataToSendToAPI)
-         
+        savePost(dataToSendToAPI)
+        applicationElement // need to call the dispatch event right here. 
     }
 })
