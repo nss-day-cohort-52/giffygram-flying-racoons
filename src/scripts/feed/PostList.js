@@ -7,7 +7,7 @@ const postListItem = (post) => {
         if (user.id === post.userId) {
             return `<div class="post_box">
             <p>${post.title}</p>
-            <p>${post.imageUrl}</p>
+            <img src="${post.imageUrl}" alt="cat vibin" width="200" height="200">
             <p>${post.description}</p>
             <p>Posted by ${user.name} on ${post.date}</p>
         </div>`
