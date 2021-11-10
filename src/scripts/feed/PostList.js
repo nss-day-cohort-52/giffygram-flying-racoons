@@ -1,11 +1,21 @@
-import { getPosts, getUsers } from "../data/provider.js"
+import { getPosts, getUsers, deletePost } from "../data/provider.js"
+
+const applicationElement = document.querySelector(".giffygram")
+
+applicationElement.addEventListener("click", click => {
+    if (click.target.id.startsWith("post--")) {
+        const [,postId] = click.target.id.split("--")
+        deletePost(parseInt(postId))
+    }
+})
 
 const postListItem = (post) => {
     const users = getUsers()
+    let html = ""
 
     for (const user of users) {
         if (user.id === post.userId) {
-            return `<div class="post_box">
+            html += `<div class="post_box">
             <h3>${post.title}</h3>
             <img src="${post.imgURL}" alt="${post.description}" width="200" height="200">
             <p>${post.description}</p>
@@ -13,6 +23,12 @@ const postListItem = (post) => {
         </div>`
         }
     }
+    const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
+    if (authenticatedUser === post.userId) {
+        html += `<button class="post__delete" id="post--${post.id}">Delete</button>`
+    }
+
+    return html 
 }
 
 export const Posts = () => {
