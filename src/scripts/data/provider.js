@@ -1,4 +1,4 @@
-const apiURL = "http://localhost:8088"
+const apiURL = "http://localhost:3000"
 const applicationElement = document.querySelector(".giffygram")
 
 
@@ -15,7 +15,7 @@ const applicationState = {
 }
 
 export const fetchUsers = async () => {
-    const response = await fetch(`${API}/users`)
+    const response = await fetch(`${apiURL}/users`)
     const users = await response.json()
     applicationState.users = users
 }
