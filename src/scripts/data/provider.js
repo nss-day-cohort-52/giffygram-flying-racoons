@@ -52,15 +52,33 @@ export const fetchPosts = async () => {
 export const getPosts = () => {
     return applicationState.posts.map(post => ({...post}))
 }
+export const favePost = (userLike) => {
 
-export const fetchLikes = () => {
-    return fetch(`${API}/likes`)
-        .then(response => response.json())
-        .then(
-            (likes) => {
-                // Store the external state in application state
-                applicationState.likes = likes
-            }
-        )
+    const fetchOptions = {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userLike),
+    }
+
+    return fetch (`${apiURL}/likes`, fetchOptions)
+    .then(response => response.json())
+    .then(() => {
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+    })
 }
-export const getLikes = 
+
+// export const fetchLikes = () => {
+//     return fetch(`${API}/likes`)
+//         .then(response => response.json())
+//         .then(
+//             (likes) => {
+//                 // Store the external state in application state
+//                 applicationState.likes = likes
+//             }
+//         )
+// }
+// export const getLikes = () => {
+//     return applicationState.likes.map(like => ({...like}))
+// }
