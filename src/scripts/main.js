@@ -19,7 +19,7 @@ export const renderApp = () => {
 
 renderApp()
 
-document.addEventListener(
+applicationElement.addEventListener(
     "stateChanged",
     () => {
         renderApp()
