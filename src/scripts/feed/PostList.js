@@ -6,10 +6,10 @@ const postListItem = (post) => {
     for (const user of users) {
         if (user.id === post.userId) {
             return `<div class="post_box">
-            <p>${post.title}</p>
-            <img src="${post.imageUrl}" alt="cat vibin" width="200" height="200">
+            <h3>${post.title}</h3>
+            <img src="${post.imgURL}" alt="${post.description}" width="200" height="200">
             <p>${post.description}</p>
-            <p>Posted by ${user.name} on ${post.date}</p>
+            <p>Posted by ${user.name} on ${post.timestamp}</p>
         </div>`
         }
     }
