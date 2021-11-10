@@ -6,13 +6,13 @@ const applicationState = {
     users: [],
     posts: [],
     currentUser: {},
-    posts: [],
     feed: {
         chosenUser: null,
         displayFavorites: false,
         displayMessages: false
-    }
-
+    },
+    likes: [],
+    messages: []
 }
 
 export const fetchUsers = async () => {
@@ -52,3 +52,15 @@ export const fetchPosts = async () => {
 export const getPosts = () => {
     return applicationState.posts.map(post => ({...post}))
 }
+
+export const fetchLikes = () => {
+    return fetch(`${API}/likes`)
+        .then(response => response.json())
+        .then(
+            (likes) => {
+                // Store the external state in application state
+                applicationState.likes = likes
+            }
+        )
+}
+export const getLikes = 
