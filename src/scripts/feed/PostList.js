@@ -10,6 +10,8 @@ const postListItem = (post) => {
             <img src="${post.imageUrl}" alt="cat vibin" width="200" height="200">
             <p>${post.description}</p>
             <p>Posted by ${user.name} on ${post.date}</p>
+            <button id="likeImg--${post.id}"><img src="src/images/pb.png"></button>
+
         </div>`
         }
     }
