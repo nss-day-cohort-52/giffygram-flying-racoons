@@ -39,6 +39,6 @@ export const savePost = (userReservation) => {
     return fetch (`${apiURL}/posts`, fetchOptions)
     .then(response => response.json())
     .then(() => {
-        mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
     })
 }

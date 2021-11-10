@@ -4,7 +4,7 @@ const applicationElement = document.querySelector(".giffygram")
 
 //this function builds the HTML tha contains the input fields for the post form
 export const postForm = () => {
-    let html = `
+    return`
 
     <section id="form">
         <div class="field">
@@ -23,14 +23,11 @@ export const postForm = () => {
 
     <button class="button" id="save">Save</button>
 
-
 `
-
-return html
 }
 
-const mainContainer = document.querySelector("#container")
-mainContainer.addEventListener("click", clickEvent => {
+
+applicationElement.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === "save") {
         // Get what the user typed into the form fields
         const title = document.querySelector("input[name='title']").value
@@ -49,6 +46,6 @@ mainContainer.addEventListener("click", clickEvent => {
 
         // Send the data to the API for permanent storage
         savePost(dataToSendToAPI)
-        applicationElement // need to call the dispatch event right here. 
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
     }
 })
