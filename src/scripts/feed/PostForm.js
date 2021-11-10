@@ -33,7 +33,7 @@ applicationElement.addEventListener("click", clickEvent => {
         const title = document.querySelector("input[name='title']").value
         const imgURL = document.querySelector("input[name='imgURL']").value
         const description = document.querySelector("input[name='description']").value
-        const date = new Date()
+        const date = new Date().toISOString().slice(0, 10)
 
         // Make an object out of the user input
         const dataToSendToAPI = {
