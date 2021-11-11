@@ -20,6 +20,13 @@ const postListItem = (post) => {
             <img src="${post.imgURL}" alt="${post.description}" width="200" height="200">
             <p>${post.description}</p>
             <p>Posted by ${user.name} on ${post.timestamp}</p>
+            <div class="post__actions">
+                <div>
+                    <img class="actionIcon" id="likeImg--${post.id}"><img src="/images/favorite-star-blank.svg" alt="star">
+                </div>
+                <div></div>
+            </div>
+
         </div>`
         }
     }
