@@ -14,6 +14,7 @@ const postListItem = (post) => {
                 <div>
                     <img class="actionIcon" id="likeImg--${post.id}"><img src="/images/favorite-star-blank.svg" alt="star">
                 </div>
+                <div></div>
             </div>
 
         </div>`
