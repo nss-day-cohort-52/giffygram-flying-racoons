@@ -1,5 +1,5 @@
 import { postForm } from "./feed/PostForm.js"
-import { Posts } from "./feed/PostList.js"
+import { postListItem, Posts } from "./feed/PostList.js"
 import { Footer } from "./nav/Footer.js"
 
 

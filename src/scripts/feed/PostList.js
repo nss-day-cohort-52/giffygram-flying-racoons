@@ -9,12 +9,13 @@ applicationElement.addEventListener("click", click => {
     }
 })
 
-const postListItem = (post) => {
+export const postListItem = (post) => {
     const users = getUsers()
     let html = ""
 
     for (const user of users) {
         if (user.id === post.userId) {
+            
             html += `<div class="post_box">
             <h3>${post.title}</h3>
             <img src="${post.imgURL}" alt="${post.description}" width="200" height="200">
@@ -32,10 +33,35 @@ const postListItem = (post) => {
     }
     const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
     if (authenticatedUser === post.userId) {
-        html += `<button class="post__delete" id="post--${post.id}">Delete</button>`
+        html += `
+            <div class="post__actions">
+                <div>
+                    <img class="actionIcon" id="post--${post.id}" src="/images/block.svg">
+                </div>
+            </div>`
     }
 
     return html 
+}
+
+const likedPostListItem = (post) => {
+    const users = getUsers()
+    const likes = getLikes()
+    let html = ""
+
+        for (const like of likes) {
+             if (post.userId === like.postId) {
+                 html += `<h3>${post.title}</h3>
+                 <img src="${post.imgURL}" alt="${post.description}" width="200" height="200">
+                 <p>${post.description}</p>
+                 <p>Posted by ${user.name} on ${post.timestamp}</p>
+
+
+                 `
+             }
+        }
+    
+    return html
 }
 
 export const Posts = () => {
@@ -44,7 +70,7 @@ export const Posts = () => {
     let html = `
         <section>
             ${
-                posts.map(postListItem).join("")
+                posts.map(likedPostListItem).join("")
             }
         </section>
     `
