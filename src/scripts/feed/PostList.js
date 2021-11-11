@@ -1,4 +1,4 @@
-import { getPosts, getUsers, getLikes, deletePost } from "../data/provider.js"
+import { getPosts, getUsers, getLikes, deletePost, favePost } from "../data/provider.js"
 
 const applicationElement = document.querySelector(".giffygram")
 
@@ -22,7 +22,7 @@ const postListItem = (post) => {
             <p>Posted by ${user.name} on ${post.timestamp}</p>
             <div class="post__actions">
                 <div>
-                    <img class="actionIcon" id="likeImg--${post.id}"><img src="/images/favorite-star-blank.svg" alt="star">
+                    <img class="actionIcon" id="likeImg--${post.id}" src="/images/favorite-star-blank.svg" alt="star">
                 </div>
                 <div></div>
             </div>
@@ -55,14 +55,13 @@ applicationElement.addEventListener("click", clickEvent => {
     if (clickEvent.target.id.startsWith("likeImg--")) {
         // Get what the user clicked on and find id of user and id of the post
         const [,postId] = clickEvent.target.id.split('--')
-        }
         const posts = getPosts()
         let foundUser = 0
         for (const post of posts) {
-            if(post.id === postId) {
+            if(post.id === parseInt(postId)) {
                 foundUser = post.userId 
-            }            
-        }
+            }         
+        } 
 
        // Make an object out of the user input
         const dataToSendToAPI = {
@@ -73,5 +72,7 @@ applicationElement.addEventListener("click", clickEvent => {
         //Send the data to the API for permanent storage
         favePost(dataToSendToAPI)
         applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+
     }
+}
 )
