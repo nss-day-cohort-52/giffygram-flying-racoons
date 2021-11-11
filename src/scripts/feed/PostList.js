@@ -22,7 +22,7 @@ const postListItem = (post) => {
             <p>Posted by ${user.name} on ${post.timestamp}</p>
             <div class="post__actions">
                 <div>
-                    <img class="actionIcon" id="likeImg--${post.id}"><img src="/images/favorite-star-blank.svg" alt="star">
+                    <img class="actionIcon" id="likeImg--${post.id}"><img src="images/favorite-star-blank.svg" alt="star">
                 </div>
                 <div></div>
             </div>
@@ -37,17 +37,42 @@ const postListItem = (post) => {
 
     return html 
 }
+let userSelected = null
+let filteredPosts = []
+applicationElement.addEventListener("change", (event) => {
+    if (event.target.id === "users") {
+        const posts = getPosts()
+        for (const post of posts) {
+            if (post.userId === parseInt(event.target.value) || event.target.value === "all") {
+                userSelected = true 
+                filteredPosts.push(post)
+            }
+        }
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+    }
+})
 
 export const Posts = () => {
-    const posts = getPosts()
-    
-    let html = `
+    let posts = getPosts()
+        
+    let html = ""
+    if (userSelected === true) {
+        html += `<section>
+        ${
+            filteredPosts.map(postListItem).join("")
+        }
+        </section>`
+    }
+    else {
+        html +=     `
         <section>
             ${
                 posts.map(postListItem).join("")
             }
         </section>
     `
-
+    }
+    userSelected = null
+    filteredPosts = []
     return html
 }
