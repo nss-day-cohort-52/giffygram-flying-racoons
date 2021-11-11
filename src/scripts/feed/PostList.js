@@ -29,7 +29,7 @@ applicationElement.addEventListener("click", clickEvent => {
 
         //Send the data to the API for permanent storage
         favePost(dataToSendToAPI)
-        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+        applicationElement.dispatchEvent(new CustomEvent("stateHasChanged"))
     }   
 }
 )
@@ -56,7 +56,7 @@ const postListItem = (post) => {
 
         
     }
-    const starSrc = (starClicked) ? "/images/favorite-star-yellow.svg" : "/images/favorite-star-blank.svg" 
+    const starSrc = (starClicked) ? "/images/favorite-star-yellow.svg" : "/images/favorite-star-blank.svg"  
     html+= `
             <div class="post__actions">
                 <div>
@@ -64,6 +64,7 @@ const postListItem = (post) => {
                 </div>
             </div>`
             
+
     const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
     if (authenticatedUser === post.userId) {
         html += `<button class="post__delete" id="post--${post.id}">Delete</button>`
