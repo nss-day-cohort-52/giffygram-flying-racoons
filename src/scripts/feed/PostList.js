@@ -22,7 +22,7 @@ const postListItem = (post) => {
             <p>Posted by ${user.name} on ${post.timestamp}</p>
             <div class="post__actions">
                 <div>
-                    <img class="actionIcon" id="likeImg--${post.id}"><img src="/images/favorite-star-blank.svg" alt="star">
+                    <img class="actionIcon" id="likeImg--${post.id}" src="/images/favorite-star-blank.svg" alt="star">
                 </div>
                 <div></div>
             </div>
