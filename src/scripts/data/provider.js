@@ -6,13 +6,13 @@ const applicationState = {
     users: [],
     posts: [],
     currentUser: {},
-    posts: [],
     feed: {
         chosenUser: null,
         displayFavorites: false,
         displayMessages: false
-    }
-
+    },
+    likes: [],
+    messages: []
 }
 
 export const fetchUsers = async () => {
@@ -52,6 +52,36 @@ export const fetchPosts = async () => {
 
 export const getPosts = () => {
     return applicationState.posts.map(post => ({...post}))
+}
+export const favePost = (userLike) => {
+
+    const fetchOptions = {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userLike),
+    }
+
+    return fetch (`${apiURL}/likes`, fetchOptions)
+    .then(response => response.json())
+    .then(() => {
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+    })
+}
+
+export const fetchLikes = () => {
+    return fetch(`${apiURL}/likes`)
+        .then(response => response.json())
+        .then(
+            (likes) => {
+                // Store the external state in application state
+                applicationState.likes = likes
+            }
+        )
+}
+export const getLikes = () => {
+    return applicationState.likes.map(like => ({...like}))
 }
 
 export const deletePost = async (id) => {
