@@ -1,4 +1,4 @@
-import { getPosts, getUsers, deletePost } from "../data/provider.js"
+import { getPosts, getUsers, getLikes, deletePost, favePost } from "../data/provider.js"
 
 const applicationElement = document.querySelector(".giffygram")
 
@@ -51,3 +51,28 @@ export const Posts = () => {
 
     return html
 }
+applicationElement.addEventListener("click", clickEvent => {
+    if (clickEvent.target.id.startsWith("likeImg--")) {
+        // Get what the user clicked on and find id of user and id of the post
+        const [,postId] = clickEvent.target.id.split('--')
+        const posts = getPosts()
+        let foundUser = 0
+        for (const post of posts) {
+            if(post.id === parseInt(postId)) {
+                foundUser = post.userId 
+            }         
+        } 
+
+       // Make an object out of the user input
+        const dataToSendToAPI = {
+            userId: foundUser,
+            postId: postId
+        }
+
+        //Send the data to the API for permanent storage
+        favePost(dataToSendToAPI)
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+
+    }
+}
+)
