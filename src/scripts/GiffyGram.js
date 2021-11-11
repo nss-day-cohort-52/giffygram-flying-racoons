@@ -1,8 +1,9 @@
 import { postForm } from "./feed/PostForm.js"
-const applicationElement = document.querySelector(".giffygram")
 import { Posts } from "./feed/PostList.js"
 import { Footer } from "./nav/Footer.js"
 
+
+const applicationElement = document.querySelector(".giffygram")
 
 export const GiffyGram = () => {
 

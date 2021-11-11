@@ -43,6 +43,7 @@ export const savePost = (userReservation) => {
         applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
     })
 }
+
 export const fetchPosts = async () => {
     const response = await fetch(`${apiURL}/posts`)
     const posts = await response.json()
@@ -51,4 +52,9 @@ export const fetchPosts = async () => {
 
 export const getPosts = () => {
     return applicationState.posts.map(post => ({...post}))
+}
+
+export const deletePost = async (id) => {
+    await fetch(`${apiURL}/posts/${id}`, { method: "DELETE" })
+    applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
 }
