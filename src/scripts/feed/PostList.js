@@ -71,17 +71,67 @@ const postListItem = (post) => {
 
     return html 
 }
+let userSelected = null
+let filteredPosts = []
+applicationElement.addEventListener("change", (event) => {
+    if (event.target.id === "users") {
+        const posts = getPosts()
+        for (const post of posts) {
+            if (post.userId === parseInt(event.target.value) || event.target.value === "all") {
+                userSelected = true 
+                filteredPosts.push(post)
+            }
+        }
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+    }
+})
 
 export const Posts = () => {
-    const posts = getPosts()
-    
-    let html = `
+    let posts = getPosts()
+        
+    let html = ""
+    if (userSelected === true) {
+        html += `<section>
+        ${
+            filteredPosts.map(postListItem).join("")
+        }
+        </section>`
+    }
+    else {
+        html +=     `
         <section>
             ${
                 posts.map(postListItem).join("")
             }
         </section>
     `
-
+    }
+    userSelected = null
+    filteredPosts = []
     return html
 }
+applicationElement.addEventListener("click", clickEvent => {
+    if (clickEvent.target.id.startsWith("likeImg--")) {
+        // Get what the user clicked on and find id of user and id of the post
+        const [,postId] = clickEvent.target.id.split('--')
+        const posts = getPosts()
+        let foundUser = 0
+        for (const post of posts) {
+            if(post.id === parseInt(postId)) {
+                foundUser = post.userId 
+            }         
+        } 
+
+       // Make an object out of the user input
+        const dataToSendToAPI = {
+            userId: foundUser,
+            postId: postId
+        }
+
+        //Send the data to the API for permanent storage
+        favePost(dataToSendToAPI)
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+
+    }
+}
+)
