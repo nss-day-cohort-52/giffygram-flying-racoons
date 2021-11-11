@@ -43,6 +43,7 @@ export const savePost = (userReservation) => {
         applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
     })
 }
+
 export const fetchPosts = async () => {
     const response = await fetch(`${apiURL}/posts`)
     const posts = await response.json()
@@ -82,3 +83,8 @@ export const favePost = (userLike) => {
 // export const getLikes = () => {
 //     return applicationState.likes.map(like => ({...like}))
 // }
+
+export const deletePost = async (id) => {
+    await fetch(`${apiURL}/posts/${id}`, { method: "DELETE" })
+    applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+}
