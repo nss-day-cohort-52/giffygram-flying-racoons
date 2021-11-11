@@ -46,30 +46,25 @@ export const Posts = () => {
 }
 applicationElement.addEventListener("click", clickEvent => {
     if (clickEvent.target.id.startsWith("likeImg--")) {
-        // Get what the user typed into the form fields
-        const foundUser = (id) => {
-
-
-            
+        // Get what the user clicked on and find id of user and id of the post
+        const [,postId] = clickEvent.target.id.split('--')
+        }
+        const posts = getPosts()
+        let foundUser = 0
+        for (const post of posts) {
+            if(post.id === postId) {
+                foundUser = post.userId 
+            }            
         }
 
-
-        const postId = clickEvent.
-        const imgURL = document.querySelector("input[name='imgURL']").value
-        const description = document.querySelector("input[name='description']").value
-        const date = new Date().toISOString().slice(0, 10)
-
-        // Make an object out of the user input
+       // Make an object out of the user input
         const dataToSendToAPI = {
-            title: title, 
-            imgURL: imgURL,
-            description: description,
-            userId: parseInt(localStorage.getItem("gg_user")),
-            timestamp: date
+            userId: foundUser,
+            postId: postId
         }
 
-        // Send the data to the API for permanent storage
-        savePost(dataToSendToAPI)
+        //Send the data to the API for permanent storage
+        favePost(dataToSendToAPI)
         applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
     }
-})
+)

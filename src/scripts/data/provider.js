@@ -70,19 +70,19 @@ export const favePost = (userLike) => {
     })
 }
 
-// export const fetchLikes = () => {
-//     return fetch(`${API}/likes`)
-//         .then(response => response.json())
-//         .then(
-//             (likes) => {
-//                 // Store the external state in application state
-//                 applicationState.likes = likes
-//             }
-//         )
-// }
-// export const getLikes = () => {
-//     return applicationState.likes.map(like => ({...like}))
-// }
+export const fetchLikes = () => {
+    return fetch(`${apiURL}/likes`)
+        .then(response => response.json())
+        .then(
+            (likes) => {
+                // Store the external state in application state
+                applicationState.likes = likes
+            }
+        )
+}
+export const getLikes = () => {
+    return applicationState.likes.map(like => ({...like}))
+}
 
 export const deletePost = async (id) => {
     await fetch(`${apiURL}/posts/${id}`, { method: "DELETE" })
