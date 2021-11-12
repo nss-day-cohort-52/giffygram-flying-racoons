@@ -1,4 +1,4 @@
-import { getPosts, getUsers, getLikes, deletePost, favePost } from "../data/provider.js"
+import { getPosts, getUsers, getLikes, deletePost, favePost, deleteLike } from "../data/provider.js"
 // event listener on delete button to remove post from api
 const applicationElement = document.querySelector(".giffygram")
 let starClicked = null
@@ -10,26 +10,28 @@ applicationElement.addEventListener("click", click => {
 })
 //event listener on star button to add liked post to api
 applicationElement.addEventListener("click", clickEvent => {
-    if (clickEvent.target.id.startsWith("favoritePost--")) {
-        // Get what the user clicked on and find id of user and id of the post
-        starClicked = true
-        const posts = getPosts()
-        const [,postId] = clickEvent.target.id.split('--')
-        for (const post of posts) {
-            if(post.id === parseInt(postId)) {
-            }         
-        } 
-
-       // Make an object out of the user input
-        const dataToSendToAPI = {
-            userId: parseInt(localStorage.getItem("gg_user")),
-            postId: parseInt(postId)
-        }
-
-        //Send the data to the API for permanent storage
-        favePost(dataToSendToAPI)
-        applicationElement.dispatchEvent(new CustomEvent("stateHasChanged"))
-    }   
+    if (clickEvent.target.src === "http://localhost:5000/images/favorite-star-blank.svg") {
+        if (clickEvent.target.id.startsWith("favoritePost--")) {
+            // Get what the user clicked on and find id of user and id of the post
+            starClicked = true
+            const posts = getPosts()
+            const [,postId] = clickEvent.target.id.split('--')
+            for (const post of posts) {
+                if(post.id === parseInt(postId)) {
+                }         
+            } 
+    
+           // Make an object out of the user input
+            const dataToSendToAPI = {
+                userId: parseInt(localStorage.getItem("gg_user")),
+                postId: parseInt(postId)
+            }
+    
+            //Send the data to the API for permanent storage
+            favePost(dataToSendToAPI)
+            applicationElement.dispatchEvent(new CustomEvent("stateHasChanged"))
+        }   
+    }
 }
 )
 
@@ -43,8 +45,6 @@ export const postListItem = (post) => {
 
     )
      
-
-
 
     const users = getUsers()
     let html = ""
@@ -76,16 +76,35 @@ export const postListItem = (post) => {
                     <img class="actionIcon" id="favoritePost--${post.id}" src="${starSrc}" alt="star"/>
                 </div>
             `
-            
+
     
+    applicationElement.addEventListener("click", clickEvt => {
+        if (clickEvt.target.src === "http://localhost:5000/images/favorite-star-yellow.svg") {
+            const likes = getLikes()    
+            const [,postId] = clickEvt.target.id.split("--")
+            for (const like of likes) {
+                if(like.postId === parseInt(postId)) {
+                    deleteLike(like.id)
+                }         
+            } 
+            //     html += `
+            //     <div class="post__actions">
+            //         <div>
+            //             <img class="actionIcon" id="favoritePost--${post.id}" src="${starSrc}" alt="star"/>
+            //         </div>
+            //     `
+        }
+        }
+    )
     if (authenticatedUser === post.userId) {
         html += `<div>
             <img id="blockPost--${post.id}" class="actionIcon" src="images/block.svg">
             </div>
             </div>`
-    }
-    html += `</section>`
-    return html 
+        }
+        html += `</section>`
+        return html 
+        
 }
 
 let userSelected = null

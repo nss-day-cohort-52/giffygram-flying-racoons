@@ -117,3 +117,11 @@ export const fetchMessages = async () => {
 export const getMessages = () => {
     return applicationState.messages.map(message => ({...message}))
 }
+export const deleteLike = (id) => {
+    return fetch(`${apiURL}/likes/${id}`, { method: "DELETE" })
+        .then(
+            () => {
+                applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+            }
+        )
+}
