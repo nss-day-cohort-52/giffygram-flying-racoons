@@ -91,6 +91,8 @@ export const deletePost = async (id) => {
 //set display favorites to true in application state
 export const setDisplayFavorites = (boolean) => {
     applicationState.feed.displayFavorites = boolean
+}
+
 export const sendMessage = async (message) => {
 
     const fetchOptions = {
@@ -104,7 +106,7 @@ export const sendMessage = async (message) => {
     const response = await fetch(`${apiURL}/messages`, fetchOptions)
     await response.json()
     applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
-}}
+}
 
 export const fetchMessages = async () => {
     const response = await fetch(`${apiURL}/messages`)

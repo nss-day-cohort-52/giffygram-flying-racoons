@@ -15,7 +15,6 @@ applicationElement.addEventListener("click", clickEvent => {
         starClicked = true
         const posts = getPosts()
         const [,postId] = clickEvent.target.id.split('--')
-        let foundUser = 0
         for (const post of posts) {
             if(post.id === parseInt(postId)) {
                 foundUser = post.userId 
@@ -24,7 +23,7 @@ applicationElement.addEventListener("click", clickEvent => {
 
        // Make an object out of the user input
         const dataToSendToAPI = {
-            userId: foundUser,
+            userId: parseInt(localStorage.getItem("gg_user")),
             postId: parseInt(postId)
         }
 
@@ -36,6 +35,18 @@ applicationElement.addEventListener("click", clickEvent => {
 )
 
 export const postListItem = (post) => {
+    const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
+    const likes = getLikes()
+    const foundLike = likes.find(
+        (like) => {
+            return like.postId === post.id && like.userId === authenticatedUser
+        }
+
+    )
+     
+
+
+
     const users = getUsers()
     let html = ""
 
@@ -58,13 +69,8 @@ export const postListItem = (post) => {
         }
     }
 
-    const likes = getLikes()
-    for (const like of likes) {
-        if (post.id === like.postId){
-            starClicked = true
-        }
-    }
-    const starSrc = (starClicked) ? "images/favorite-star-yellow.svg" : "images/favorite-star-blank.svg" 
+    
+    const starSrc = (foundLike) ? "images/favorite-star-yellow.svg" : "images/favorite-star-blank.svg" 
     html += `
             <div class="post__actions">
                 <div>
@@ -72,7 +78,7 @@ export const postListItem = (post) => {
                 </div>
             `
             
-    const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
+    
     if (authenticatedUser === post.userId) {
         html += `<div>
             <img id="blockPost--${post.id}" class="actionIcon" src="images/block.svg">
