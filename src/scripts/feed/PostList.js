@@ -48,14 +48,6 @@ const postListItem = (post) => {
             </div>`
         }
     }
-    const likes = getLikes()
-    for (const like of likes) {
-        if (post.id === like.postId){
-            starClicked = true
-        }
-
-        
-    }
     const starSrc = (starClicked) ? "/images/favorite-star-yellow.svg" : "/images/favorite-star-blank.svg"  
     html+= `
             <div class="post__actions">
@@ -63,6 +55,14 @@ const postListItem = (post) => {
                     <img class="actionIcon" id="likeImg--${post.id}" src="${starSrc}" alt="star"/>
                 </div>
             </div>`
+    const likes = getLikes()
+    for (const like of likes) {
+        if (post.id === like.postId){
+            starClicked = true
+            
+        }
+        
+    }
             
 
     const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
