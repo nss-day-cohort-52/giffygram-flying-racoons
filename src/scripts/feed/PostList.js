@@ -9,7 +9,7 @@ applicationElement.addEventListener("click", click => {
     }
 })
 applicationElement.addEventListener("click", clickEvent => {
-    if (clickEvent.target.id.startsWith("likeImg--")) {
+    if (clickEvent.target.id.startsWith("favoritePost--")) {
         // Get what the user clicked on and find id of user and id of the post
         starClicked = true
         const posts = getPosts()
@@ -67,7 +67,7 @@ const postListItem = (post) => {
     html += `
             <div class="post__actions">
                 <div>
-                    <img id="favoritePost--" class="actionIcon" id="likeImg--${post.id}" src="${starSrc}" alt="star"/>
+                    <img id="favoritePost--${post.id}" class="actionIcon" src="${starSrc}" alt="star"/>
                 </div>
             `
             
@@ -86,7 +86,7 @@ let userSelected = null
 let filteredPosts = []
 
 applicationElement.addEventListener("change", (event) => {
-    if (event.target.id === "users") {
+    if (event.target.id === "userSelection") {
         const posts = getPosts()
         for (const post of posts) {
             if (post.userId === parseInt(event.target.value) || event.target.value === "all") {

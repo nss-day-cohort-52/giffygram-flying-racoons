@@ -33,6 +33,18 @@ applicationElement.addEventListener("click", clickEvent => {
     }
 })
 
+applicationElement.addEventListener("click", clickEvent => {
+    if (clickEvent.target.id === "directMessage__cancel") {
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+    }
+})
+
+applicationElement.addEventListener("click", clickEvent => {
+    if (clickEvent.target.id === "directMessage__close") {
+        applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+    }
+})
+
 export const MessageForm = () => {
     const users = getUsers()
     let html = `<div class="directMessage">

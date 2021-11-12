@@ -1,4 +1,8 @@
+import { getMessages } from "../data/provider.js"
+
 export const NavBar = () => {
+    const messages = getMessages()
+    // const userMessages = messages.filter(message => )
     return `
         <nav class="navigation">
         <div class="navigation__item navigation__icon">

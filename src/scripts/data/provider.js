@@ -1,7 +1,6 @@
 const apiURL = "http://localhost:3000"
 const applicationElement = document.querySelector(".giffygram")
 
-
 const applicationState = {
     users: [],
     posts: [],
@@ -102,4 +101,14 @@ export const sendMessage = async (message) => {
     const response = await fetch(`${apiURL}/messages`, fetchOptions)
     await response.json()
     applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+}
+
+export const fetchMessages = async () => {
+    const response = await fetch(`${apiURL}/messages`)
+    const messages = await response.json()
+    applicationState.messages = messages
+}
+
+export const getMessages = () => {
+    return applicationState.messages.map(message => ({...message}))
 }
