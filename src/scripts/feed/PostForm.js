@@ -26,7 +26,6 @@ export const postForm = () => {
 `
 }
 
-
 applicationElement.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === "save") {
         // Get what the user typed into the form fields

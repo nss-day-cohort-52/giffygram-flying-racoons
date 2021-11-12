@@ -88,3 +88,18 @@ export const deletePost = async (id) => {
     await fetch(`${apiURL}/posts/${id}`, { method: "DELETE" })
     applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
 }
+
+export const sendMessage = async (message) => {
+
+    const fetchOptions = {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message),
+    }
+
+    const response = await fetch(`${apiURL}/messages`, fetchOptions)
+    await response.json()
+    applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
+}
