@@ -41,11 +41,8 @@ export const postListItem = (post) => {
     const foundLike = likes.find(
         (like) => {
             return like.postId === post.id && like.userId === authenticatedUser
-        }
-
-    )
-     
-
+    })
+    
     const users = getUsers()
     let html = ""
 
@@ -68,7 +65,6 @@ export const postListItem = (post) => {
         }
     }
 
-    
     const starSrc = (foundLike) ? "images/favorite-star-yellow.svg" : "images/favorite-star-blank.svg" 
     html += `
             <div class="post__actions">
@@ -96,6 +92,7 @@ export const postListItem = (post) => {
         }
         }
     )
+              
     if (authenticatedUser === post.userId) {
         html += `<div>
             <img id="blockPost--${post.id}" class="actionIcon" src="images/block.svg">
@@ -143,6 +140,9 @@ export const Posts = () => {
             filteredPosts.map(postListItem).join("")
         }
         </section>`
+    }
+    else if (userSelected === true && filteredPosts.length === 0) {
+        html += ""
     }
     else {
         html +=     `
