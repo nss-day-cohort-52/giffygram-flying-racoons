@@ -4,35 +4,35 @@ const applicationElement = document.querySelector(".giffygram")
 let starClicked = null
 applicationElement.addEventListener("click", click => {
     if (click.target.id.startsWith("blockPost--")) {
-        const [,postId] = click.target.id.split("--")
+        const [, postId] = click.target.id.split("--")
         deletePost(parseInt(postId))
     }
 })
 //event listener on star button to add liked post to api
 applicationElement.addEventListener("click", clickEvent => {
-    if (clickEvent.target.src === "http://localhost:5000/images/favorite-star-blank.svg") {
+    // if (clickEvent.target.src === "http://localhost:5000/images/favorite-star-blank.svg") {
         if (clickEvent.target.id.startsWith("favoritePost--")) {
             // Get what the user clicked on and find id of user and id of the post
             starClicked = true
-            const posts = getPosts()
-            const [,postId] = clickEvent.target.id.split('--')
-            for (const post of posts) {
-                if(post.id === parseInt(postId)) {
-                }         
-            } 
-    
-           // Make an object out of the user input
-            const dataToSendToAPI = {
-                userId: parseInt(localStorage.getItem("gg_user")),
-                postId: parseInt(postId)
+            const [, postId] = clickEvent.target.id.split('--')
+            const likes = getLikes()
+            const foundLike = likes.find(like => like.postId === parseInt(postId))
+            if (foundLike){
+                deleteLike(foundLike.id)
+            } else {
+                // Make an object out of the user input
+                const dataToSendToAPI = {
+                    userId: parseInt(localStorage.getItem("gg_user")),
+                    postId: parseInt(postId)
+                }
+
+                //Send the data to the API for permanent storage
+                favePost(dataToSendToAPI)
             }
-    
-            //Send the data to the API for permanent storage
-            favePost(dataToSendToAPI)
             applicationElement.dispatchEvent(new CustomEvent("stateHasChanged"))
-        }   
+        }
     }
-}
+//}
 )
 
 export const postListItem = (post) => {
@@ -41,8 +41,8 @@ export const postListItem = (post) => {
     const foundLike = likes.find(
         (like) => {
             return like.postId === post.id && like.userId === authenticatedUser
-    })
-    
+        })
+
     const users = getUsers()
     let html = ""
 
@@ -65,7 +65,7 @@ export const postListItem = (post) => {
         }
     }
 
-    const starSrc = (foundLike) ? "images/favorite-star-yellow.svg" : "images/favorite-star-blank.svg" 
+    const starSrc = (foundLike) ? "images/favorite-star-yellow.svg" : "images/favorite-star-blank.svg"
     html += `
             <div class="post__actions">
                 <div>
@@ -73,35 +73,17 @@ export const postListItem = (post) => {
                 </div>
             `
 
-    
-    applicationElement.addEventListener("click", clickEvt => {
-        if (clickEvt.target.src === "http://localhost:5000/images/favorite-star-yellow.svg") {
-            const likes = getLikes()    
-            const [,postId] = clickEvt.target.id.split("--")
-            for (const like of likes) {
-                if(like.postId === parseInt(postId)) {
-                    deleteLike(like.id)
-                }         
-            } 
-            //     html += `
-            //     <div class="post__actions">
-            //         <div>
-            //             <img class="actionIcon" id="favoritePost--${post.id}" src="${starSrc}" alt="star"/>
-            //         </div>
-            //     `
-        }
-        }
-    )
-              
+
+
     if (authenticatedUser === post.userId) {
         html += `<div>
             <img id="blockPost--${post.id}" class="actionIcon" src="images/block.svg">
             </div>
             </div>`
-        }
-        html += `</section>`
-        return html 
-        
+    }
+    html += `</section>`
+    return html
+
 }
 
 let userSelected = null
@@ -112,7 +94,7 @@ applicationElement.addEventListener("change", (event) => {
         const posts = getPosts()
         for (const post of posts) {
             if (post.userId === parseInt(event.target.value) || event.target.value === "all") {
-                userSelected = true 
+                userSelected = true
                 filteredPosts.push(post)
             }
         }
@@ -126,29 +108,27 @@ export const LikedPosts = (post) => {
     const likes = getLikes()
 
     const likedPostArray = likes.filter(like => like.userId === post.userId)
-    console.log(likedPostArray) 
-        
+    console.log(likedPostArray)
+
 }
 
 export const Posts = () => {
     let posts = getPosts()
-        
+
     let html = ""
     if (userSelected === true) {
         html += `<section class="">
-        ${
-            filteredPosts.map(postListItem).join("")
-        }
+        ${filteredPosts.map(postListItem).join("")
+            }
         </section>`
     }
     else if (userSelected === true && filteredPosts.length === 0) {
         html += ""
     }
     else {
-        html +=     `
+        html += `
         <section class="">
-            ${
-                posts.map(postListItem).join("")
+            ${posts.map(postListItem).join("")
             }
         </section>
     `
