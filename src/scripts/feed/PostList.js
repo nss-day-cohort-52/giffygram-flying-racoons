@@ -17,7 +17,6 @@ applicationElement.addEventListener("click", clickEvent => {
         const [,postId] = clickEvent.target.id.split('--')
         for (const post of posts) {
             if(post.id === parseInt(postId)) {
-                foundUser = post.userId 
             }         
         } 
 
