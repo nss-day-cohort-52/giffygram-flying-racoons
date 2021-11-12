@@ -88,3 +88,8 @@ export const deletePost = async (id) => {
     await fetch(`${apiURL}/posts/${id}`, { method: "DELETE" })
     applicationElement.dispatchEvent(new CustomEvent("stateChanged"))
 }
+
+//set display favorites to true in application state
+export const setDisplayFavorites = (boolean) => {
+    applicationState.feed.displayFavorites = boolean
+}

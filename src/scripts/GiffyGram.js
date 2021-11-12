@@ -16,7 +16,7 @@ export const GiffyGram = () => {
             ${Posts()}
             
             
-    ${Footer()}
+        ${Footer()}
             `
 
 

@@ -1,5 +1,5 @@
 import { getPosts, getUsers, getLikes, deletePost, favePost } from "../data/provider.js"
-
+// event listener on delete button to remove post from api
 const applicationElement = document.querySelector(".giffygram")
 let starClicked = null
 applicationElement.addEventListener("click", click => {
@@ -8,6 +8,7 @@ applicationElement.addEventListener("click", click => {
         deletePost(parseInt(postId))
     }
 })
+//event listener on star button to add liked post to api
 applicationElement.addEventListener("click", clickEvent => {
     if (clickEvent.target.id.startsWith("likeImg--")) {
         // Get what the user clicked on and find id of user and id of the post
@@ -24,7 +25,7 @@ applicationElement.addEventListener("click", clickEvent => {
        // Make an object out of the user input
         const dataToSendToAPI = {
             userId: foundUser,
-            postId: postId
+            postId: parseInt(postId)
         }
 
         //Send the data to the API for permanent storage
