@@ -56,14 +56,7 @@ const postListItem = (post) => {
             `
         }
     }
-    const starSrc = (starClicked) ? "/images/favorite-star-yellow.svg" : "/images/favorite-star-blank.svg"  
-    html+= `
-            <div class="post__actions">
-                <div>
-                    <img class="actionIcon" id="likeImg--${post.id}" src="${starSrc}" alt="star"/>
-                </div>
-            </div>`
-
+    
     const likes = getLikes()
     for (const like of likes) {
         if (post.id === like.postId){
@@ -72,7 +65,14 @@ const postListItem = (post) => {
         }
         
     }
-}
+    const starSrc = (starClicked) ? "/images/favorite-star-yellow.svg" : "/images/favorite-star-blank.svg"  
+    html+= `
+            <div class="post__actions">
+                <div>
+                    <img class="actionIcon" id="favoritePost--${post.id}" src="${starSrc}" alt="star"/>
+                </div>
+            </div>`
+
     const authenticatedUser = parseInt(localStorage.getItem("gg_user"))
     if (authenticatedUser === post.userId) {
         html += `<div>
@@ -82,7 +82,7 @@ const postListItem = (post) => {
     }
     html += `</section>`
     return html 
-
+}
 
 let userSelected = null
 let filteredPosts = []
