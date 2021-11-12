@@ -1,5 +1,5 @@
 import { postForm } from "./feed/PostForm.js"
-import { postListItem, Posts } from "./feed/PostList.js"
+import { LikedPosts, postListItem, Posts } from "./feed/PostList.js"
 import { Footer } from "./nav/Footer.js"
 
 
@@ -14,6 +14,7 @@ export const GiffyGram = () => {
         <div class="postForm"></div>
         <h2>Posts</h2>
             ${Posts()}
+            
             
     ${Footer()}
             `

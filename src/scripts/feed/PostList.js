@@ -78,24 +78,14 @@ export const postListItem = (post) => {
     return html 
 }
 
-const likedPostListItem = (post) => {
+export const LikedPosts = (post) => {
     const users = getUsers()
+    const posts = getPosts()
     const likes = getLikes()
-    let html = ""
 
-        for (const like of likes) {
-             if (post.userId === like.postId) {
-                 html += `<h3>${post.title}</h3>
-                 <img src="${post.imgURL}" alt="${post.description}" width="200" height="200">
-                 <p>${post.description}</p>
-                 <p>Posted by ${user.name} on ${post.timestamp}</p>
-
-
-                 `
-             }
-        }
-    
-    return html
+    const likedPostArray = likes.filter(like => like.userId === post.userId)
+    console.log(likedPostArray) 
+        
 }
 
 export const Posts = () => {
@@ -104,7 +94,7 @@ export const Posts = () => {
     let html = `
         <section>
             ${
-                posts.map(likedPostListItem).join("")
+                posts.map(postListItem).join("")
             }
         </section>
     `
