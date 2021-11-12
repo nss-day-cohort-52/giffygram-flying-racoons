@@ -16,9 +16,9 @@ export const Footer = () => {
     </footer>`
 }
 
-// click event listener on the show favorites checkbox
+
 applicationElement.addEventListener("change", changeEvent => {
     if (changeEvent.target.id === "checkbox__showFavs") {
-       
+       setDisplayFavorites(true)
     }
 })
